@@ -1,2 +1,7 @@
 # tttai
-Practicing AI with simple game like Tic Tac Toe
+Practicing Artificial Intelligence with simple board game like Tic Tac Toe
+
+## Algorithms to study
+* Minimax
+* Alpha Beta
+* Negamax
