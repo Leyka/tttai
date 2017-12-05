@@ -1,4 +1,4 @@
-import random 
+import random
 
 # Tic Tac Toe squares indexes
 # 0 | 1 | 2
@@ -15,7 +15,7 @@ class Square:
         self.index = index
         self.value = DEFAULT
 
-    def is_empty(self):
+    def empty(self):
         return self.value == DEFAULT
 
 class Board:
@@ -29,18 +29,17 @@ class Board:
     def __init__(self):
         self.setup()
 
-    def setup(self): 
+    def setup(self):
         self.squares = []
-        self.game_over = False
         self.current_player = self.who_starts()
         for i in range(self.SIZE):
             self.squares.append(Square(i))
 
     # Returns Cross (human) or Circle (ai)
     def who_starts(self):
-        if random.getrandbits(1)  == 0: 
+        if random.getrandbits(1)  == 0:
             return CROSS
-        else: 
+        else:
             return CIRCLE
 
     def draw(self):
@@ -49,22 +48,27 @@ class Board:
             print(self.squares[i].value + ' ' + self.squares[i+1].value + ' ' + self.squares[i+2].value)
             i += 3
 
-    def update(self, square_id, player): 
+    def update(self, square_id, player):
         self.squares[square_id].value = player
 
-    def check_win(self, player): 
+    def check_win(self, player):
         squares = self.squares
         for win in self.WIN_COMBOS:
             return squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player
-    
-    def is_tied(self): 
-        raise Exception('Unsupported yet')
+
+    def empty_squares(self):
+        return [s for s in self.squares if s.empty()]
+
+    def is_tied(self):
+        return len(self.empty_squares()) == 0:
 
 def main():
     board = Board()
     human = CROSS
     ai = CIRCLE
     player = board.current_player
+
+    print(len(board.empty_squares()))
 
 if __name__ == '__main__':
     main()
