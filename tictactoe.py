@@ -1,27 +1,47 @@
+import random 
+
+# Tic Tac Toe squares indexes
+# 0 | 1 | 2
+# 3 | 4 | 5
+# 6 | 7 | 8
+
+# Configuration
+DEFAULT = '_'
+CROSS = 'x'
+CIRCLE = 'o'
+
 class Square:
-    def __init__(self, index, value):
+    def __init__(self, index):
         self.index = index
-        self.value = value
-
-    def set_cross(self):
-        self.value = 'x'
-
-    def set_circle(self):
-        self.value = 'o'
+        self.value = DEFAULT
 
     def is_empty(self):
-        return self.value == '_'
-
+        return self.value == DEFAULT
 
 class Board:
     SIZE = 9
-    def __init__(self):
-        self.squares = []
-        self.build()
+    WIN_COMBOS = [
+        [0,1,2], [3,4,5], [6,7,8], # columns
+        [0,3,6], [1,4,7], [2,5,8], # rows
+        [0,4,8], [2,4,6] # diagionals
+    ]
 
-    def build(self):
+    def __init__(self):
+        self.setup()
+
+    def setup(self): 
+        self.squares = []
+        self.game_over = False
+        self.current_player = self.who_starts()
         for i in range(self.SIZE):
-            self.squares.append(Square(i, '_'))
+            self.squares.append(Square(i))
+
+    # Returns Cross (human) or Circle (ai)
+    def who_starts(self):
+        if random.getrandbits(1)  == 0: 
+            return CROSS
+        else: 
+            return CIRCLE
 
     def draw(self):
         i = 0
@@ -29,16 +49,49 @@ class Board:
             print(self.squares[i].value + ' ' + self.squares[i+1].value + ' ' + self.squares[i+2].value)
             i += 3
 
-def main():
+    def update(self, square_id, player): 
+        self.squares[square_id].value = player
 
+    def check_win(self, player): 
+        squares = self.squares
+        for win in self.WIN_COMBOS:
+            return squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player
+    
+    def is_tied(): 
+        raise Exception('Unsupported yet')
+
+def main():
     board = Board()
-    board.draw()
-    print(board.squares[0].is_empty())
-    print('new board')
-    board.squares[0].set_cross()
-    board.squares[1].set_circle()
-    board.draw()
-    print(board.squares[0].is_empty())
+    human = CROSS
+    ai = CIRCLE
+    player = board.current_player
+    board.update(1, player)
+    board.update(0, player)
+    board.update(3, player)
+    board.update(2, player)
+    win = board.check_win(player)
+    print(win)
+
+    """
+    current_player = None
+    # Human start?
+    if board.who_starts() == 0: 
+        print('You will start first')
+        current_player = human
+
+    else:
+        print('The bot starts first')
+        current_player = ai
+    """
+
+    #board.update(0, human)
+    #board.update(1, ai)
+    #board.update(0, human)
+    
+    #board.draw()
+    #board.check_win(player)
+
+    #print(board.squares[0].is_empty())
 
 
 if __name__ == '__main__':
