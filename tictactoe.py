@@ -57,7 +57,7 @@ class Board:
         for win in self.WIN_COMBOS:
             return squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player
     
-    def is_tied(): 
+    def is_tied(self): 
         raise Exception('Unsupported yet')
 
 def main():
