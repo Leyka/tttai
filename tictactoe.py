@@ -1,14 +1,10 @@
 import random
-
+from config import DEFAULT, CROSS, CIRCLE
 # Tic Tac Toe squares indexes
 # 0 | 1 | 2
 # 3 | 4 | 5
 # 6 | 7 | 8
 
-# Configuration
-DEFAULT = '_'
-CROSS = 'x'
-CIRCLE = 'o'
 
 class Square:
     def __init__(self, index):
@@ -43,14 +39,26 @@ class Board:
         else:
             return CIRCLE
 
+    def update_square(self, square_idx, player):
+        self.squares[square_idx].value = player
+
+    # TODO rework this method
+    def move(self, square_idx):
+        if self.game_over:
+            raise Exception("All squares are filled")
+
+        self.update_square(square_idx, self.current_player)
+        self.check_win(self.current_player)
+
+        # Determine next player
+        self.current_player = CIRCLE if self.current_player == CROSS else CROSS
+
+
     def draw(self):
         i = 0
         while i < self.SIZE:
             print(self.squares[i].value + ' ' + self.squares[i+1].value + ' ' + self.squares[i+2].value)
             i += 3
-
-    def update(self, square_id, player):
-        self.squares[square_id].value = player
 
     def check_win(self, player):
         squares = self.squares
