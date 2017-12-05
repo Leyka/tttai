@@ -65,34 +65,6 @@ def main():
     human = CROSS
     ai = CIRCLE
     player = board.current_player
-    board.update(1, player)
-    board.update(0, player)
-    board.update(3, player)
-    board.update(2, player)
-    win = board.check_win(player)
-    print(win)
-
-    """
-    current_player = None
-    # Human start?
-    if board.who_starts() == 0: 
-        print('You will start first')
-        current_player = human
-
-    else:
-        print('The bot starts first')
-        current_player = ai
-    """
-
-    #board.update(0, human)
-    #board.update(1, ai)
-    #board.update(0, human)
-    
-    #board.draw()
-    #board.check_win(player)
-
-    #print(board.squares[0].is_empty())
-
 
 if __name__ == '__main__':
     main()
