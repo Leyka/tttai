@@ -1,0 +1,6 @@
+Classe TicTacToe
+  draw board
+  check win
+    win combos
+  game over
+  turn (player or ia)
