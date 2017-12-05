@@ -30,6 +30,7 @@ class Board:
         self.setup()
 
     def setup(self):
+        self.game_over = False
         self.squares = []
         self.current_player = self.who_starts()
         for i in range(self.SIZE):
@@ -54,21 +55,24 @@ class Board:
     def check_win(self, player):
         squares = self.squares
         for win in self.WIN_COMBOS:
-            return squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player
+            if squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player:
+                self.game_over = True
+                return True
+        return False
 
     def empty_squares(self):
         return [s for s in self.squares if s.empty()]
 
     def is_tied(self):
-        return len(self.empty_squares()) == 0:
+        if len(self.empty_squares()) == 0:
+            self.game_over = True
+        return self.game_over
 
 def main():
     board = Board()
     human = CROSS
     ai = CIRCLE
     player = board.current_player
-
-    print(len(board.empty_squares()))
 
 if __name__ == '__main__':
     main()

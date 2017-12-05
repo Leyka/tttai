@@ -15,7 +15,7 @@ Classe TicTacToe
     """
     current_player = None
     # Human start?
-    if board.who_starts() == 0: 
+    if board.who_starts() == 0:
         print('You will start first')
         current_player = human
 
@@ -27,8 +27,16 @@ Classe TicTacToe
     #board.update(0, human)
     #board.update(1, ai)
     #board.update(0, human)
-    
+
     #board.draw()
     #board.check_win(player)
 
     #print(board.squares[0].is_empty())
+
+
+    ---
+
+        for i in range(9):
+            board.update(i, player)
+
+        print(board.is_tied())
