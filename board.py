@@ -1,20 +1,17 @@
+from config import CROSS, CIRCLE, DEFAULT
 import random
-from config import DEFAULT, CROSS, CIRCLE
-# Tic Tac Toe squares indexes
-# 0 | 1 | 2
-# 3 | 4 | 5
-# 6 | 7 | 8
-
-
-class Square:
-    def __init__(self, index):
-        self.index = index
-        self.value = DEFAULT
-
-    def empty(self):
-        return self.value == DEFAULT
 
 class Board:
+    """
+    Typical 3x3 tic tac toe board. Each square has an index like this:
+    0 | 1 | 2
+    ---------
+    3 | 4 | 5
+    ---------
+    6 | 7 | 8
+    ---------
+    """
+
     SIZE = 9
     WIN_COMBOS = [
         [0,1,2], [3,4,5], [6,7,8], # columns
@@ -31,7 +28,6 @@ class Board:
         self.current_player = self.who_starts()
         for i in range(self.SIZE):
             self.squares.append(Square(i))
-
     # Returns Cross (human) or Circle (ai)
     def who_starts(self):
         if random.getrandbits(1)  == 0:
@@ -39,26 +35,14 @@ class Board:
         else:
             return CIRCLE
 
-    def update_square(self, square_idx, player):
-        self.squares[square_idx].value = player
-
-    # TODO rework this method
-    def move(self, square_idx):
-        if self.game_over:
-            raise Exception("All squares are filled")
-
-        self.update_square(square_idx, self.current_player)
-        self.check_win(self.current_player)
-
-        # Determine next player
-        self.current_player = CIRCLE if self.current_player == CROSS else CROSS
-
-
     def draw(self):
         i = 0
         while i < self.SIZE:
             print(self.squares[i].value + ' ' + self.squares[i+1].value + ' ' + self.squares[i+2].value)
             i += 3
+
+    def update_square(self, square_index, player):
+        self.squares[square_index].value = player
 
     def check_win(self, player):
         squares = self.squares
@@ -76,11 +60,10 @@ class Board:
             self.game_over = True
         return self.game_over
 
-def main():
-    board = Board()
-    human = CROSS
-    ai = CIRCLE
-    player = board.current_player
+class Square:
+    def __init__(self, index):
+        self.index = index
+        self.value = DEFAULT
 
-if __name__ == '__main__':
-    main()
+    def empty(self):
+        return self.value == DEFAULT

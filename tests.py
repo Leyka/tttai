@@ -1,11 +1,6 @@
-
 from unittest import TestCase
-from tictactoe import Board
+from board import Board
 from config import CROSS, CIRCLE
-
-# 0 | 1 | 2
-# 3 | 4 | 5
-# 6 | 7 | 8
 
 class BoardTest(TestCase):
     def setUp(self):
@@ -35,7 +30,7 @@ class BoardTest(TestCase):
         board.update_square(2, player)
         self.assertTrue(board.check_win(player))
         self.assertTrue(board.game_over)
-
+    """
     def test_next_player(self):
         board = self.board
         first_player = board.current_player
@@ -43,12 +38,4 @@ class BoardTest(TestCase):
         board.move(0)
         # Check if player has changed
         self.assertEqual(board.current_player, second_player)
-
-
-
-
-
-
-
-
-
+    """
