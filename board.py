@@ -85,10 +85,8 @@ class Board:
         elif self.check_game_tied():
             message = '~ GAME OVER ~'
         else:
-            # We keep playing
-            self.change_player()
-            message = '** AI Turn **' if self.current_player == HUMAN else '** Your Turn! **'
-            
+            # Keep playing
+            self.change_player()            
         return message
 
 class Square:
