@@ -28,6 +28,7 @@ class Board:
         self.current_player = self.who_starts()
         for i in range(self.SIZE):
             self.squares.append(Square(i))
+
     # Returns Cross (human) or Circle (ai)
     def who_starts(self):
         if random.getrandbits(1)  == 0:
@@ -41,11 +42,12 @@ class Board:
             print(self.squares[i].value + ' ' + self.squares[i+1].value + ' ' + self.squares[i+2].value)
             i += 3
 
-    def update_square(self, square_index, player):
-        self.squares[square_index].value = player
+    def update_square(self, square_index):
+        self.squares[square_index].value = self.current_player
 
-    def check_win(self, player):
+    def check_win(self):
         squares = self.squares
+        player = self.current_player
         for win in self.WIN_COMBOS:
             if squares[win[0]].value == player and squares[win[1]].value == player and squares[win[2]].value == player:
                 self.game_over = True
@@ -59,6 +61,26 @@ class Board:
         if len(self.empty_squares()) == 0:
             self.game_over = True
         return self.game_over
+
+    def validates_move(self, answer):
+        # Cast answer from string -> int if it's not already an int
+        move = int(answer) if isinstance(answer, str) else answer
+
+        if move <0 or move >8:
+            raise Exception('Your answer must be between 0 and 8')
+        # Check if move is in empty square
+        if not self.squares[move].empty():
+            raise Exception('The square #' + answer + ' is already taken')
+
+        return move
+    
+    def change_player(self):
+        self.current_player = CROSS if self.current_player == CIRCLE else CIRCLE
+
+    def play(self, answer):
+        move = self.validates_move(answer)
+        self.update_square(move)
+        self.change_player()
 
 class Square:
     def __init__(self, index):
