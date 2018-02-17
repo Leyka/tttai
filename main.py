@@ -18,6 +18,7 @@ def play():
         # Play the turn
         try:
             message = board.play(answer)
+            # Game over or Game won
             if message is not None:
                 print(message)
         except Exception as e:
@@ -25,7 +26,13 @@ def play():
             continue
 
         board.draw()
-        # TODO : Game won & Game over
+
+        # Play again?
+        if board.game_over:
+            play_again = input('Play again? (y/n) : ')
+            if play_again == 'y':
+                board.setup()
+                print('\n', '========= NEW GAME =========')
 
 if __name__ == '__main__':
     play()
