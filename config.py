@@ -1,4 +1,3 @@
-# Configuration
 DEFAULT = '_'
-CROSS = 'x'
-CIRCLE = 'o'
+HUMAN = 'x'
+BOT = 'o'

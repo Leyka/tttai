@@ -1,4 +1,4 @@
-from config import CROSS, CIRCLE, DEFAULT
+from config import HUMAN, BOT, DEFAULT
 import random
 
 class Board:
@@ -29,12 +29,11 @@ class Board:
         for i in range(self.SIZE):
             self.squares.append(Square(i))
 
-    # Returns Cross (human) or Circle (ai)
     def who_starts(self):
         if random.getrandbits(1)  == 0:
-            return CROSS
+            return HUMAN
         else:
-            return CIRCLE
+            return BOT
 
     def draw(self):
         i = 0
@@ -45,7 +44,13 @@ class Board:
     def update_square(self, square_index):
         self.squares[square_index].value = self.current_player
 
-    def check_win(self):
+    def empty_squares(self):
+        return [s for s in self.squares if s.empty()]
+
+    def change_player(self):
+        self.current_player = HUMAN if self.current_player == BOT else BOT
+
+    def check_game_won(self):
         squares = self.squares
         player = self.current_player
         for win in self.WIN_COMBOS:
@@ -54,10 +59,7 @@ class Board:
                 return True
         return False
 
-    def empty_squares(self):
-        return [s for s in self.squares if s.empty()]
-
-    def is_tied(self):
+    def check_game_tied(self):
         if len(self.empty_squares()) == 0:
             self.game_over = True
         return self.game_over
@@ -73,13 +75,21 @@ class Board:
 
         return move
     
-    def change_player(self):
-        self.current_player = CROSS if self.current_player == CIRCLE else CIRCLE
-
     def play(self, answer):
         move = self.validates_move(answer)
         self.update_square(move)
-        self.change_player()
+        
+        message = None
+        if self.check_game_won():
+            message = '~~ YOU WON !! w0000t w0000t ~~' if self.current_player == HUMAN else '~~ Aw! man you lost :( ~~'
+        elif self.check_game_tied():
+            message = '~ GAME OVER ~'
+        else:
+            # We keep playing
+            self.change_player()
+            message = '** AI Turn **' if self.current_player == HUMAN else '** Your Turn! **'
+            
+        return message
 
 class Square:
     def __init__(self, index):
