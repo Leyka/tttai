@@ -65,12 +65,11 @@ class Board:
     def validates_move(self, answer):
         # Cast answer from string -> int if it's not already an int
         move = int(answer) if isinstance(answer, str) else answer
-
         if move <0 or move >8:
             raise Exception('Your answer must be between 0 and 8')
         # Check if move is in empty square
         if not self.squares[move].empty():
-            raise Exception('The square #' + answer + ' is already taken')
+            raise Exception('The square #' + str(move) + ' is already taken')
 
         return move
     
