@@ -13,7 +13,7 @@ def play():
             answer = input('Choose a square between 0 and 8 : ')
         else: # AI
             print('* AI Turn *')
-            answer = randint(0, 8) # Dumb random answer
+            answer = randint(0, 8) # Temporary a dumb random answer
 
         # Play the turn
         try:
