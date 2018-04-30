@@ -4,12 +4,14 @@ import random
 class Board:
     """
     Typical 3x3 tic tac toe board. Each square has an index like this:
-    0 | 1 | 2
-    ---------
-    3 | 4 | 5
-    ---------
-    6 | 7 | 8
-    ---------
+
+    [0] | [1] | [2]
+    ---------------
+    [3] | [4] | [5]
+    ---------------
+    [6] | [7] | [8]
+    ---------------
+
     """
 
     SIZE = 9
@@ -74,11 +76,11 @@ class Board:
             raise Exception('The square #' + str(move) + ' is already taken')
 
         return move
-    
+
     def play(self, answer):
         move = self.validates_move(answer)
         self.update_square(move)
-        
+
         message = None
         if self.check_game_won():
             message = '~~ YOU WON !! w0000t w0000t ~~' if self.current_player == HUMAN else '~~ Aw! man you lost :( ~~'
@@ -86,7 +88,7 @@ class Board:
             message = '~ GAME OVER ~'
         else:
             # Keep playing
-            self.change_player()            
+            self.change_player()
         return message
 
 class Square:
